@@ -8,6 +8,8 @@ const inputPrecio = document.getElementById("precio")
 const inputKilometraje = document.getElementById("kilometraje")
 const cards = document.getElementById("cont-cardss")
 const addBtn = document.getElementById("agregar")
+const valorTotal = document.getElementById('total');
+let total = 0;
 
 
 // Creamos la funcion que nos permite crear una nueva tarea a travez del formulario 
@@ -92,20 +94,23 @@ const form = document.getElementById("vehiculo-form");
 form.addEventListener('submit' , (e) => {
     e.preventDefault(); //Evita que se recargue 
 
-    const foto = inputFoto.value.trim();
+    let foto = inputFoto.value.trim();
     const nombre = inputNombre.value.trim();
     const marca = inputMarca.value.trim();
     const modelo = InputModelo.value.trim();
     const precio = inputPrecio.value.trim();
     const kilometraje = inputKilometraje.value.trim();
 
-
+    if(foto==""){
+        foto = 'https://img.freepik.com/vector-gratis/cargando-circulos-azul-degradado_78370-2646.jpg?semt=ais_hybrid&w=740&q=80'
+    }
 
 
     if(foto==""|| nombre=="" || marca=="" || modelo=="" || precio=="" || kilometraje=="" ){
-        alert("Informacion incompleta, llene todos los datos")
+        alert("Informacion incompleta, llene todos los datos");
     }else{
         const newCol = createVehiculos(foto, nombre, marca, modelo, precio, kilometraje);
+        EventsToVehicles(newCol);
         cards.appendChild(newCol);
         inputFoto.value="";
         inputNombre.value="";
@@ -117,3 +122,100 @@ form.addEventListener('submit' , (e) => {
     }
 
 })
+
+
+function EventsToVehicles(col){
+
+    //utilizamos QuerySelector para capturar los buttons que estan dentro de col
+    
+    const botonComprar = col.querySelector ('.btn-success');
+    const botonEliminar = col.querySelector ('.btn-danger');
+
+    // cuando le de en agregar 
+
+     botonComprar.addEventListener('click' , ()=>{
+       const fotoPanel = col.querySelector('img').getAttribute('src');
+       const nombrePanel = col.querySelector('.card-title').textContent;
+       const marcaPanel = col.querySelector('.card-subtitle' , 'text-muted').textContent;
+       const precioPanel = col.querySelector('.text-success').textContent;
+
+       const newPanel = itemPanel(fotoPanel,nombrePanel,marcaPanel,precioPanel)
+
+       document.querySelector('.panel').appendChild(newPanel);
+    });
+
+    // evento de eliminar de la de vehiculos
+    botonEliminar.addEventListener('click', ()=>{
+        col.remove();
+    });
+}
+
+
+
+const panel = document.querySelector('.panel');
+const carrito = document.getElementById('carrito');
+
+carrito.addEventListener('click' , ()=>{
+    panel.classList.toggle('activo')
+})
+
+
+function itemPanel(foto, nombre, marca, precio){
+
+    const divPadrePanel = document.createElement('div');
+        divPadrePanel.classList.add('row' , 'tarjeta');
+
+    const contImgPanel = document.createElement('div');
+        contImgPanel.classList.add('col-md-4' , 'cont-img');
+
+    const imgPanel = document.createElement('img');
+        imgPanel.setAttribute('src' , foto);
+
+    const contInfoPanel = document.createElement('div');
+        contInfoPanel.classList.add('col-md-8' , 'cont-info');
+
+    const h3Nombre = document.createElement('h3');
+        h3Nombre.textContent = nombre
+
+    const h3Marca = document.createElement('h3');
+        h3Marca.textContent = marca;
+
+    const h3Precio = document.createElement('h3');
+        h3Precio.textContent = precio
+
+    const btnEliminar = document.createElement('h3');
+        btnEliminar.classList.add('btn-original')
+        btnEliminar.textContent = 'X'
+        btnEliminar.addEventListener('click', () => divPadrePanel.remove());
+
+    // ENSAMBLAMOS TODO EL HTML DEL ITEM DE LA CARD DEL PANEL
+
+    contImgPanel.appendChild(imgPanel);
+    contInfoPanel.appendChild(h3Nombre);
+    contInfoPanel.appendChild(h3Marca);
+    contInfoPanel.appendChild(h3Precio);
+    contInfoPanel.appendChild(btnEliminar);
+
+    divPadrePanel.appendChild(contImgPanel);
+    divPadrePanel.appendChild(contInfoPanel);
+
+    return divPadrePanel;
+
+}
+
+function eventsPanels(divPadrePanel){
+    const btnEliminar = divPadrePanel.querySelector('btn-original');
+
+    //evento de eliminar de la de vehiculos 
+
+    btnEliminar.addEventListener('click',() =>
+        actualizarTotal();
+
+)}
+
+
+
+
+
+
+
