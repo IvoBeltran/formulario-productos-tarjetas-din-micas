@@ -141,7 +141,9 @@ function EventsToVehicles(col){
 
        const newPanel = itemPanel(fotoPanel,nombrePanel,marcaPanel,precioPanel)
 
+       eventsPanels(newPanel);
        document.querySelector('.panel').appendChild(newPanel);
+        actualizarTotal();
     });
 
     // evento de eliminar de la de vehiculos
@@ -185,8 +187,7 @@ function itemPanel(foto, nombre, marca, precio){
 
     const btnEliminar = document.createElement('h3');
         btnEliminar.classList.add('btn-original')
-        btnEliminar.textContent = 'X'
-        btnEliminar.addEventListener('click', () => divPadrePanel.remove());
+        btnEliminar.textContent = 'X';
 
     // ENSAMBLAMOS TODO EL HTML DEL ITEM DE LA CARD DEL PANEL
 
@@ -204,14 +205,32 @@ function itemPanel(foto, nombre, marca, precio){
 }
 
 function eventsPanels(divPadrePanel){
-    const btnEliminar = divPadrePanel.querySelector('btn-original');
+    const btnEliminar = divPadrePanel.querySelector('.btn-original');
 
     //evento de eliminar de la de vehiculos 
 
-    btnEliminar.addEventListener('click',() =>
+    btnEliminar.addEventListener('click',() =>{
+        divPadrePanel.remove();
         actualizarTotal();
 
-)}
+    });
+}
+
+
+function actualizarTotal(){
+    let total  = 0;
+    // recorremos todas las taarjetas del panel 
+    const precio = document.querySelectorAll('.panel .tarjeta .cont-info h3:nth-child(3)');
+    precio.forEach(precio => {
+
+        //quitamos caracteres no numericos para poder sumar 
+
+        let valor = precio.textContent.replace(/[^0-9]/g, '');
+        total += Number(valor);
+    })
+
+    document.getElementById('total').textContent = "Total: $" + total.toLocaleString();
+}
 
 
 
