@@ -49,7 +49,7 @@ function createVehiculos(foto, nombre, marca, modelo, precio, kilometraje) {
 
 
     const h4Kilometraje = document.createElement("h4");
-    h4Kilometraje.classList.add("card-text");
+    h4Kilometraje.classList.add("card-text2");
     h4Kilometraje.textContent = 'Km:' + kilometraje
 
     const h2 = document.createElement("h2");
@@ -163,12 +163,16 @@ function EventsToVehicles(col) {
         const fotoPanel = col.querySelector('img').getAttribute('src');
         const nombrePanel = col.querySelector('.card-title').textContent;
         const marcaPanel = col.querySelector('.card-subtitle', 'text-muted').textContent;
+        const modeloPanel = col.querySelector('card-text').textContent;
+        const kilometrajePanel = col.querySelector('card-text2').textContent;
         const precioPanel = col.querySelector('.text-success').textContent;
 
         const newItemPanel = {
             foto: fotoPanel,
             nombre: nombrePanel,
             marca: marcaPanel,
+            modelo: modeloPanel,
+            kilometraje: kilometrajePanel,
             precio: precioPanel,
 
         }
