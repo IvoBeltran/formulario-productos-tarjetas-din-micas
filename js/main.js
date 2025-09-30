@@ -163,8 +163,8 @@ function EventsToVehicles(col) {
         const fotoPanel = col.querySelector('img').getAttribute('src');
         const nombrePanel = col.querySelector('.card-title').textContent;
         const marcaPanel = col.querySelector('.card-subtitle', 'text-muted').textContent;
-        const modeloPanel = col.querySelector('card-text').textContent;
-        const kilometrajePanel = col.querySelector('card-text2').textContent;
+        const modeloPanel = col.querySelector('.card-text').textContent;
+        const kilometrajePanel = col.querySelector('.card-text2').textContent;
         const precioPanel = col.querySelector('.text-success').textContent;
 
         const newItemPanel = {
@@ -174,11 +174,10 @@ function EventsToVehicles(col) {
             modelo: modeloPanel,
             kilometraje: kilometrajePanel,
             precio: precioPanel,
-
         }
 
         // capturamos un arreglo existente  en el localStorage  o lo creamos vacio si no existe previamente 
-        const carroGuardado = JSON.parse(localStorage.getItem('carro')) || [];
+        const carroGuardado = JSON.parse(localStorage.getItem('carros')) || [];
 
 
         // Agregamos el arreglo []a cursoGuardado [] newCurso  
@@ -186,7 +185,7 @@ function EventsToVehicles(col) {
 
         localStorage.setItem('carros', JSON.stringify(carroGuardado));
 
-        const newPanel = itemPanel(fotoPanel, nombrePanel, marcaPanel, precioPanel)
+        const newPanel = itemPanel(fotoPanel, nombrePanel, marcaPanel, modeloPanel, kilometrajePanel, precioPanel)
 
         eventsPanels(newPanel);
         document.querySelector('.panel').appendChild(newPanel);
@@ -209,7 +208,7 @@ carrito.addEventListener('click', () => {
 })
 
 
-function itemPanel(foto, nombre, marca, precio) {
+function itemPanel(foto, nombre, marca, modelo, kilometraje, precio) {
 
     const divPadrePanel = document.createElement('div');
     divPadrePanel.classList.add('row', 'tarjeta');
@@ -284,11 +283,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const carrosGuasdados = JSON.parse(localStorage.getItem('carros')) || [];
     carrosGuasdados.forEach(carro => {
-        const panelItem = itemPanel(carro.foto, carro.nombre, carro.marca, carro.precio);
+        const panelItem = itemPanel(carro.foto, carro.nombre, carro.marca, carro.modelo, carro.kilometraje, carro.precio);
         eventsPanels(panelItem);
         document.querySelector('.panel').appendChild(panelItem);
-
-
+    
     });
 
     const vehiculosGuardados = JSON.parse(localStorage.getItem('vehiculos')) || [];

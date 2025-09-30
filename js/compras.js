@@ -4,29 +4,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const vehiculosGuardados = JSON.parse(localStorage.getItem('carros')) || [];
 
-    vehiculosGuardados.forEach((vehiculo) => {
+    vehiculosGuardados.forEach((carro) => {
         const fila = document.createElement('tr');
 
         const tdFoto = document.createElement('td');
         const foto = document.createElement('img')
-        foto.setAttribute('src', vehiculo.foto);
+        foto.setAttribute('src', carro.foto);
         foto.style.width = '80px';
         foto.style.borderRadius = '80px';
 
         const tdNombre = document.createElement('td');
-            tdNombre.textContent = vehiculo.nombre
+            tdNombre.textContent = carro.nombre
 
         const tdMarca = document.createElement('td');
-            tdMarca.textContent = vehiculo.marca
+            tdMarca.textContent = carro.marca
 
         const tdModelo = document.createElement('td');
-            tdModelo.textContent = vehiculo.modelo
+            tdModelo.textContent = carro.modelo
 
         const tdKilometraje = document.createElement('td');
-            tdKilometraje.textContent = vehiculo.kilometraje
+            tdKilometraje.textContent = carro.kilometraje
 
         const tdPrecio = document.createElement('td');
-            tdPrecio.textContent = vehiculo.precio
+            tdPrecio.textContent = carro.precio
 
 
         fila.appendChild(tdFoto);
